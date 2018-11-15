@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User,BaseUserManager,AbstractBaseUser,PermissionsMixin
 from datetime import datetime
-from imagekit.models import ProcessedImageField
 from tinymce.models import HTMLField
 
 # Create your models here.
