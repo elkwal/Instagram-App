@@ -45,7 +45,7 @@ class Profile(models.Model):
 
 
 class Image(models.Model):
-    image_title = models.CharField(max_length = 100)
+    image_title = models.CharField(max_length = 100, null=True, blank= True)
     image_caption = HTMLField()
     image = ProcessedImageField(upload_to = 'posts',format='JPEG',options={'quality':100})
     user_profile = models.ForeignKey(User,null=True,blank=True,on_delete = models.CASCADE)
