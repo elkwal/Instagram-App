@@ -7,12 +7,10 @@ from tinymce.models import HTMLField
 # Create your models here.
 
 class Profile(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
-    followers = models.ManyToManyField('Profile',related_name='followers_profile',blank=True)
-    following = models.ManyToManyField('Profile',related_name='following_profile',blank=True)
-    profile_pic = ProcessedImageField(upload_to='profile_pics',format='JPEG',options={'quality':100},null=True,blank=True)
-    bio = models.CharField(max_length=200,null=True,blank=True)
-
+    
+    profile_photo = models.ImageField(upload_to = 'images/', blank = True)
+    user = models.ForeignKey(User,on_delete = models.CASCADE,null = True)
+    bio = models.TextField(max_length = 100)
     
     def save_profile(self):
         self.save()
@@ -41,19 +39,46 @@ class Image(models.Model):
     posted_on = models.DateTimeField(default=datetime.now)
     likes = models.ManyToManyField(User,related_name='likes',blank=True)
 
-    def update_caption(self,caption):
-        self.image_caption = caption
+
+    def save_image(self):
         self.save()
+
+    def delete_image(self):
+        self.delete()
+
+
+    def update_caption(self,image_caption):
+        self.image_caption = image_caption
+        self.save()
+    
 
     def __str__(self):
         return self.image_title
 
+    @classmethod
+    def get_all(cls):
+        images = cls.objects.all()
+        return images
+
+    @classmethod
+    def get_image(cls, image_id):
+        image = cls.objects.get(id=image_id)
+        return image
 
 class Comment(models.Model):
-    post = models.ForeignKey('Image',on_delete=models.CASCADE)
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-    comment = models.CharField(max_length=100)
-    posted_on = models.DateTimeField(default=datetime.now)
+   photo = models.ForeignKey(Image,on_delete = models.CASCADE, blank = True)
+    username = models.ForeignKey(User,on_delete = models.CASCADE)
+    comment = models.CharField(max_length = 400)
 
-    def __str__(self):
-        return self.comment
+
+    def save_comment(self):
+        self.save()
+
+    def delete_comment(self):
+        self.delete()
+
+    verbose_name_plural = "Categories"
+
+    def get_comments_by_images(cls, id):
+        comments = Comment.objects.filter(image_pk = id)
+        return comments
