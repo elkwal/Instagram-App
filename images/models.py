@@ -13,18 +13,7 @@ class Profile(models.Model):
     profile_pic = ProcessedImageField(upload_to='profile_pics',format='JPEG',options={'quality':100},null=True,blank=True)
     bio = models.CharField(max_length=200,null=True,blank=True)
 
-    # def get_number_of_followers(self):
-    #     if self.followers.count():
-    #         return self.followers.count()
-    #     else:
-    #         return 0
-
-    # def get_number_of_following(self):
-    #     if self.following.count():
-    #         return self.following.count()
-    #     else:
-    #         return 0
-
+    
     def save_profile(self):
         self.save()
 
@@ -51,18 +40,6 @@ class Image(models.Model):
     user_profile = models.ForeignKey(User,null=True,blank=True,on_delete = models.CASCADE)
     posted_on = models.DateTimeField(default=datetime.now)
     likes = models.ManyToManyField(User,related_name='likes',blank=True)
-
-    # def get_number_of_comments(self):
-    #     return self.comment_set.count()
-
-    # def save_image(self):
-    #     self.save()
-
-    # def delete_image(self):
-    #     self.delete()
-
-    # def get_image(cls,image_id):
-    #     image = cls.objects.get(id=image_id)
 
     def update_caption(self,caption):
         self.image_caption = caption
