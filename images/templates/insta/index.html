@@ -1,0 +1,49 @@
+{% extends 'all-insta/base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block content %}
+{{block.super}}
+  <link rel="stylesheet" href="../static/css/index.css">
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-7">
+      <div class="row">
+        {% for insta_item in insta %}
+        <div class="col-md-2">
+
+        </div>
+          <div class="col-md-10 well">
+
+              <p><img src="{{profile.profile_photo.url}}" class="img-responsive" alt="Image" width="50px" height="45px" style="border-radius: 50% ; padding: 0.15rem;  width: 45px; background: linear-gradient(to right bottom, #d82c66, #c92e3b, #e15e43, #f3813f, #ffa63e);"></a>
+                 <strong> {{insta_item.profile}} </strong></p>
+              <a href="{% url 'image' insta_item.id %}"><img  src="{{insta_item.image.url}}" class="img-responsive" alt="Image" width="500px" height="450px"></a>
+              <h4 class="btn btn-lg"><i class="far fa-heart" style="font-size:24px"></i></h4>{{insta_item.likes}}
+              <a href="{% url 'comment-photo'%}"> <h4 class="btn btn-lg" ><i class="far fa-comment" style="font-size:24px;color:black;"></i> </h4> </a>{{insta_item.comment}}
+              <hr>
+              <b>Comment: </b>{{insta_item.image_caption}}
+
+          </div>
+
+
+        {% endfor%}
+      </div>
+    </div>
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-4 well" style="max-width:270px;">
+
+      <p>Suggestions For You  <b style="float:right;"> See All</b></p>
+        {% for profile in profiles %}
+          <p><b> {{profile.user}}  </b> <b style="color:#3897f0;float:right;">Follow</b></p>
+        {% endfor%}
+
+
+    </div>
+
+  </div>
+</div>
+
+
+{% endblock %}
