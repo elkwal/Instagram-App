@@ -31,9 +31,9 @@ class Profile(models.Model):
 
 
 class Image(models.Model):
+    image = models.ImageField(upload_to = 'images/', blank = True)
     image_title = models.CharField(max_length = 100, null=True, blank= True)
     image_caption = HTMLField()
-    image = ProcessedImageField(upload_to = 'posts',format='JPEG',options={'quality':100})
     user_profile = models.ForeignKey(User,null=True,blank=True,on_delete = models.CASCADE)
     posted_on = models.DateTimeField(default=datetime.now)
     likes = models.ManyToManyField(User,related_name='likes',blank=True)
