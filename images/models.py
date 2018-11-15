@@ -66,7 +66,8 @@ class Image(models.Model):
         return image
 
 class Comment(models.Model):
-   photo = models.ForeignKey(Image,on_delete = models.CASCADE, blank = True)
+
+    photo = models.ForeignKey(Image,on_delete = models.CASCADE, blank = True)
     username = models.ForeignKey(User,on_delete = models.CASCADE)
     comment = models.CharField(max_length = 400)
 
