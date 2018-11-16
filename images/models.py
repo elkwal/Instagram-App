@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User,BaseUserManager,AbstractBaseUser,PermissionsMixin
+from django.contrib.auth.models import User,BaseUserManager
 from datetime import datetime
 from tinymce.models import HTMLField
 
@@ -10,6 +10,7 @@ class Profile(models.Model):
     profile_photo = models.ImageField(upload_to = 'images/', blank = True)
     user = models.ForeignKey(User,on_delete = models.CASCADE,null = True)
     bio = models.TextField(max_length = 100)
+    user = models.OneToOneField(User, null = True, blank=True)
     
     def save_profile(self):
         self.save()
