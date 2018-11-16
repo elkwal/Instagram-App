@@ -26,16 +26,17 @@ class Profile(models.Model):
         searched_user = User.objects.get(username = username)
         return searched_user
 
-    def __str__(self):
-        return self.user.username
+    # def __str__(self):
+    #     return self.user.username
 
 
 class Image(models.Model):
     image = models.ImageField(upload_to = 'images/', blank = True)
-    image_name = models.CharField(max_length = 30)
-    image_caption = models.TextField(max_length = 200)
-    profile = models.ForeignKey(User,on_delete = models.CASCADE,null = True)
-    photo_date = models.DateTimeField(auto_now_add=True)
+    image_title = models.CharField(max_length = 100, null=True, blank= True)
+    image_caption = HTMLField()
+    user_profile = models.ForeignKey(User,null=True,blank=True,on_delete = models.CASCADE)
+    posted_on = models.DateTimeField(default=datetime.now)
+    
 
     def save_image(self):
         self.save()
@@ -75,7 +76,6 @@ class Comment(models.Model):
     def delete_comment(self):
         self.delete()
 
-    verbose_name_plural = "Categories"
 
     def get_comments_by_images(cls, id):
         comments = Comment.objects.filter(image_pk = id)

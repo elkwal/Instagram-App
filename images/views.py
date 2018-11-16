@@ -23,7 +23,10 @@ def welcome(request):
 @login_required(login_url='/accounts/login/')
 def today(request):
     current_user = request.user
-    insta = Image.get_all()
+    # insta = Image.get_all()
+    insta = Image.objects.all()
+
+
     profile = Profile.objects.get(user = current_user)
     profiles = Profile.objects.all()
     form = NewCommentForm()
@@ -80,7 +83,7 @@ def search_results(request):
     if 'profile' in request.GET and request.GET["profile"]:
         search_term = request.GET.get("profile")
         searched_profile = Profile.search_by_username(search_term)
-        # message = f'{search_term}'
+        message = f'{search_term}'
 
         return render(request, 'insta/search.html',{"message":message,"profiles": searched_profile})
 
