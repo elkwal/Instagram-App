@@ -32,12 +32,10 @@ class Profile(models.Model):
 
 class Image(models.Model):
     image = models.ImageField(upload_to = 'images/', blank = True)
-    image_title = models.CharField(max_length = 100, null=True, blank= True)
-    image_caption = HTMLField()
-    user_profile = models.ForeignKey(User,null=True,blank=True,on_delete = models.CASCADE)
-    posted_on = models.DateTimeField(default=datetime.now)
-    likes = models.ManyToManyField(User,related_name='likes',blank=True)
-
+    image_name = models.CharField(max_length = 30)
+    image_caption = models.TextField(max_length = 200)
+    profile = models.ForeignKey(User,on_delete = models.CASCADE,null = True)
+    photo_date = models.DateTimeField(auto_now_add=True)
 
     def save_image(self):
         self.save()
